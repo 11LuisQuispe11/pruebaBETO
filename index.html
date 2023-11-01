@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesador de Comentarios</title>
+</head>
+<body>
+    <h1>Ingrese su comentario</h1>
+    <textarea id="comentario"></textarea>
+    <button onclick="procesar()">Procesar</button>
+    <h2>Respuesta:</h2>
+    <p id="respuesta"></p>
+
+    <script>
+        function procesar() {
+            let comentario = document.getElementById("comentario").value;
+            fetch('/procesar_comentario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({comentario: comentario})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("respuesta").innerText = data.respuesta;
+            });
+        }
+    </script>
+</body>
+</html>
